@@ -7,7 +7,7 @@ from fractions import Fraction
 class QuantumUtils(cmd.Cmd):
     intro = """
 ╔══════════════════════════════════════════════════════════════════╗
-║                    QuantumUtils v1.0.0                           ║
+║                    QuantumUtils v1.0.1                           ║
 ║     The easy-to-use tool for Quantum Computing Calculations      ║
 ║                   Type "help" for commands                       ║
 ╚══════════════════════════════════════════════════════════════════╝
@@ -514,7 +514,11 @@ Examples:
             bra = np.conj(state.T)
             intermediate = np.matmul(op, state)
             expectation = np.matmul(bra, intermediate)
-            print(f"<{state_name}|{op_name}|{state_name}> = {expectation[0, 0]}")
+
+            # Strip non-alphabetic and non-numeric characters from the state name
+            cleaned_state_name = re.sub(r'[^a-zA-Z0-9]', '', state_name)
+
+            print(f"<{cleaned_state_name}|{op_name}|{cleaned_state_name}> = {expectation[0, 0]}")
         except Exception as e:
             print(f"Error: {e}")
 
